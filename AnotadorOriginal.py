@@ -10,7 +10,7 @@ def AcercaDe(event):
     messagebox.showinfo("Acerca de", message = """
 Anotador hecho por Paty
 2021
-Version v0.2
+Version v0.1
     """)
 
 def Ayuda(event):
