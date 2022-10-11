@@ -78,6 +78,7 @@ def GuardarComo(event):
         fichero.close()
         var.set("Archivo guardado")
 
+
 def Salir(event):
     ventanaSalir = Toplevel(width = 210, height = 100)
     ventanaSalir.title("Salir")
@@ -96,21 +97,26 @@ def SalirGuardar():
 def SalirSinGuardar():
     raiz.quit()
 
+def Cerrando():
+    Salir("Control-q")
+
 raiz = Tk()
 notaGuardada = StringVar()
 var = StringVar()
 var.set("Hola wenas")
+foto = PhotoImage(file = "ico.png")
 
 frame = Frame(raiz)
 barraMenu = Menu(frame)
-texto = Text(frame, width = 40, height = 15)
+texto = Text(frame, width = 30, height = 10)
 mensajes = Label(frame, textvariable = var, justify = LEFT)
 
 raiz.title("Anotador")
 raiz.config(menu = barraMenu)
 raiz.resizable(1, 1)
-raiz.minsize(150, 100)
+raiz.minsize(300, 250)
 raiz.option_add('*font', '{Helvetica} 11')
+raiz.iconphoto(False, foto)
 
 frame.pack(fill = "both", expand = "true")
 
@@ -124,15 +130,15 @@ menuArchivo.add_command(label = "Salir", command = lambda: Salir("Control-q"))
 
 '''
 menuEditar = Menu(barraMenu, tearoff = 0)
-menuEditar.add_command(label = "Cortar")
-menuEditar.add_command(label = "Copiar")
-menuEditar.add_command(label = "Pegar")
+menuEditar.add_command(label = "Cortar", command = lambda: Cortar)
+menuEditar.add_command(label = "Copiar", command = lambda: Copiar)
+menuEditar.add_command(label = "Pegar", command = lambda: Pegar)
 '''
 
 menuAyuda = Menu(barraMenu, tearoff = 0)
-menuAyuda.add_command(label = "Ayuda", command = lambda: Ayuda("Control-Shift-w"))
+menuAyuda.add_command(label = "Ayuda", command = lambda: Ayuda("Control-h"))
 menuAyuda.add_separator()
-menuAyuda.add_command(label = "Acerca de", command = lambda: AcercaDe("Control-w"))
+menuAyuda.add_command(label = "Acerca de", command = lambda: AcercaDe("Control-Shift-h"))
 
 barraMenu.add_cascade(label = "Archivo", menu = menuArchivo)
 #barraMenu.add_cascade(label = "Editar", menu = menuEditar)
@@ -158,6 +164,7 @@ raiz.bind_all("<Control-H>", Ayuda)
 raiz.bind_all("<Control-Shift-h>", AcercaDe)
 raiz.bind_all("<Control-Shift-H>", AcercaDe)
 
+raiz.protocol("WM_DELETE_WINDOW", Cerrando)
 raiz.mainloop()
 
 # Fuente: https://docs.hektorprofe.net/python/interfaces-graficas-con-tkinter/editor-de-texto/
